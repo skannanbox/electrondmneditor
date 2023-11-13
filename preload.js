@@ -24,5 +24,5 @@ const { contextBridge, ipcRenderer } = require('electron')
 contextBridge.exposeInMainWorld('electronAPI', {
   setTitle: (title) => ipcRenderer.send('set-title', title),
   save: (xml) => ipcRenderer.send('save', xml),
-  openFile: () => ipcRenderer.invoke('dialog:openFile')
+  openClickedFile: () => ipcRenderer.invoke('openClickedFile')
 })

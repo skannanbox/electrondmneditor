@@ -4,7 +4,7 @@
 <head>
   <style>
     #dmn-editor-container {
-      height: calc(100vh - 50px);
+      height: calc(100vh - 10px);
     }
 
     .toolbar {
@@ -24,35 +24,20 @@
 </head>
 
 <body>
-  <div class="toolbar">
-    <button type="button" id="btn">Open a File</button>
-    <button id="close">close</button>
-  </div>
   <div id="dmn-editor-container" />
 
   <script>
-    const btn = document.getElementById('btn')
-    const filePathElement = document.getElementById('filePath')
-
-    btn.addEventListener('click', async () => {
-      const filePath = await window.electronAPI.openFile()
-      // filePathElement.innerText = filePath
-      const editor = DmnEditor.open({
-        container: document.getElementById("dmn-editor-container"),
-        initialContent: Promise.resolve(filePath),
-        readOnly: false
+    const filePath = window.electronAPI.openClickedFile()
+    const editor = DmnEditor.open({
+      container: document.getElementById("dmn-editor-container"),
+      initialContent: Promise.resolve(filePath),
+      readOnly: false
+    });
+    editor.subscribeToContentChanges(isDirty => {
+      editor.getContent().then(content => {
+        window.electronAPI.save(content)
       });
-      editor.subscribeToContentChanges(isDirty => {
-        console.log("saving1");
-        editor.getContent().then(content => {
-          console.log("saving1", content);
-          window.electronAPI.save(content)
-        });
-      });
-      document.getElementById("close").addEventListener("click", () => {
-        editor.close();
-      });
-    })
+    });
 
   </script>
 </body>

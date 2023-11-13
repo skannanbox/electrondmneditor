@@ -1,5 +1,5 @@
 {
-  "name": "electron-quick-start",
+  "name": "electron-dmn-editor",
   "version": "1.0.0",
   "description": "A minimal Electron application",
   "main": "main.js",
@@ -16,6 +16,18 @@
     "tutorial",
     "demo"
   ],
+  "build": {
+    "fileAssociations": [
+      {
+        "ext": "dmn",
+        "name": "DMN",
+        "role": "Editor"
+      }
+    ],
+    "nsis": {
+      "perMachine": true
+    }
+  },
   "author": "GitHub",
   "license": "CC0-1.0",
   "devDependencies": {
